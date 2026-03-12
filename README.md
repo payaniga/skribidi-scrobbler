@@ -38,8 +38,8 @@ It runs entirely on GitHub Actions — no server, no cost, no third-party servic
 ### 1. Fork or clone this repo
 
 ```bash
-git clone https://github.com/payaniga/skribidi-public.git
-cd skribidi-public
+git clone https://github.com/payaniga/skribidi-scrobbler.git
+cd skribidi-scrobbler
 ```
 
 ### 2. Set up your Python environment
