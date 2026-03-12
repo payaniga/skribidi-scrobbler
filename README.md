@@ -1,6 +1,6 @@
 # skribidi
 
-Automatically scrobbles your YouTube Music listening history to Last.fm — every 4 hours, with zero manual interaction.
+Automatically scrobbles your YouTube Music listening history to Last.fm — every 15 minutes, with zero manual interaction.
 
 ---
 
@@ -14,7 +14,7 @@ It runs entirely on GitHub Actions — no server, no cost, no third-party servic
 
 ## How it works
 
-1. A GitHub Actions cron job fires every 4 hours
+1. A GitHub Actions cron job fires every 15 minutes
 2. It fetches your top 50 recently played tracks from YT Music (via OAuth)
 3. It compares them against the last saved snapshot to find new plays
 4. New tracks are scrobbled to Last.fm with approximate timestamps (spaced 3 minutes apart)
@@ -38,8 +38,8 @@ It runs entirely on GitHub Actions — no server, no cost, no third-party servic
 ### 1. Fork or clone this repo
 
 ```bash
-git clone https://github.com/payaniga/skribidi.git
-cd skribidi
+git clone https://github.com/payaniga/skribidi-public.git
+cd skribidi-public
 ```
 
 ### 2. Set up your Python environment
@@ -58,7 +58,8 @@ This project uses browser cookie auth (OAuth does not work with YouTube Music's 
 2. Open DevTools (`Cmd+Option+I`) → **Network** tab
 3. Type `browse` in the filter box, then click anything on the page
 4. Right-click the `browse` request that appears → **Copy** → **Copy as cURL**
-5. Paste the cURL into `refresh_auth.py` and run it — this generates `browser.json`
+5. Save the copied cURL command into a file named `curl.txt` in the project root
+6. Run `python refresh_auth.py` — this generates `browser.json`
 
 `browser.json` contains your session cookies — **keep it private, never commit it**.
 
@@ -109,8 +110,9 @@ YouTube Music session cookies expire every 1–3 months. When the workflow fails
 1. Open [music.youtube.com](https://music.youtube.com) in Chrome
 2. DevTools → Network → filter by `browse` → click anything on the page
 3. Right-click the `browse` request → **Copy** → **Copy as cURL**
-4. Run `refresh_auth.py` locally with the new cURL to regenerate `browser.json`
-5. Copy the new contents of `browser.json` and update the `YTM_BROWSER` GitHub Secret
+4. Save the copied cURL command into a file named `curl.txt` in the project root
+5. Run `python refresh_auth.py` locally to regenerate `browser.json`
+6. Copy the new contents of `browser.json` and update the `YTM_BROWSER` GitHub Secret
 
 GitHub Actions will email you when a workflow run fails, so you'll know when it's time to refresh.
 
@@ -123,7 +125,7 @@ The cron schedule is defined in `.github/workflows/scrobble.yml`:
 ```yaml
 on:
   schedule:
-    - cron: '0 */4 * * *'
+    - cron: '*/15 * * * *'
 ```
 
 To change the frequency, edit the cron expression. The format is:
@@ -142,8 +144,9 @@ To change the frequency, edit the cron expression. The format is:
 
 | Frequency | Cron expression |
 |---|---|
+| Every 15 minutes (default) | `*/15 * * * *` |
 | Every hour | `0 * * * *` |
-| Every 4 hours (default) | `0 */4 * * *` |
+| Every 4 hours | `0 */4 * * *` |
 | Every 6 hours | `0 */6 * * *` |
 | Once a day at midnight UTC | `0 0 * * *` |
 | Once a day at 9am UTC | `0 9 * * *` |
