@@ -1,0 +1,49 @@
+name: Scrobble YT Music History
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrobble:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Write browser.json from secret
+        env:
+          YTM_BROWSER: ${{ secrets.YTM_BROWSER }}
+        run: python3 -c "import os; open('browser.json', 'w').write(os.environ['YTM_BROWSER'])"
+
+      - name: Run scrobble script
+        run: python scrobble.py
+        env:
+          LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
+          LASTFM_SECRET: ${{ secrets.LASTFM_SECRET }}
+          LASTFM_USERNAME: ${{ secrets.LASTFM_USERNAME }}
+          LASTFM_PASSWORD: ${{ secrets.LASTFM_PASSWORD }}
+
+      - name: Commit updated snapshot and log
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add last_snapshot.json runs.log
+          git diff --staged --quiet || git commit -m "chore: update snapshot"
+          git push

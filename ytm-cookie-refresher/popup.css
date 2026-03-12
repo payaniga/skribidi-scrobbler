@@ -1,0 +1,54 @@
+body {
+  font-family: system-ui, sans-serif;
+  width: 260px;
+  padding: 16px;
+  color: #222;
+  margin: 0;
+}
+
+h1 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: #1a73e8;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.label { color: #666; }
+.value { font-weight: 500; text-align: right; max-width: 160px; }
+
+.status-success { color: #1e7e34; }
+.status-error { color: #c5221f; }
+
+#errorMsg {
+  font-size: 12px;
+  color: #c5221f;
+  margin: 8px 0;
+  word-break: break-word;
+  display: none;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+button {
+  flex: 1;
+  padding: 7px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#refreshBtn { background: #1a73e8; color: white; }
+#refreshBtn:disabled { background: #aaa; cursor: not-allowed; }
+#settingsBtn { background: #f1f3f4; color: #222; }

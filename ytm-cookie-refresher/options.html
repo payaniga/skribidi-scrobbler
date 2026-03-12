@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YTM Cookie Refresher — Settings</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 480px; margin: 40px auto; padding: 0 20px; color: #222; }
+    h1 { font-size: 18px; margin-bottom: 24px; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; margin-top: 16px; }
+    input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; box-sizing: border-box; }
+    .hint { font-size: 12px; color: #666; margin-top: 4px; }
+    .actions { margin-top: 24px; display: flex; gap: 10px; }
+    button { padding: 8px 16px; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; }
+    #saveBtn { background: #1a73e8; color: white; }
+    #testBtn { background: #f1f3f4; color: #222; }
+    #status { margin-top: 16px; font-size: 13px; padding: 8px 12px; border-radius: 4px; display: none; }
+    #status.success { background: #e6f4ea; color: #1e7e34; display: block; }
+    #status.error { background: #fce8e6; color: #c5221f; display: block; }
+  </style>
+</head>
+<body>
+  <h1>YTM Cookie Refresher — Settings</h1>
+
+  <label for="githubToken">GitHub Personal Access Token</label>
+  <input type="password" id="githubToken" placeholder="ghp_...">
+  <div class="hint">Fine-grained PAT with Secrets: write permission for this repo.</div>
+
+  <label for="repoOwner">GitHub Repo Owner</label>
+  <input type="text" id="repoOwner" placeholder="payaniga">
+
+  <label for="repoName">GitHub Repo Name</label>
+  <input type="text" id="repoName" placeholder="skribidi">
+
+  <label for="secretName">Secret Name</label>
+  <input type="text" id="secretName" placeholder="YTM_BROWSER">
+
+  <label for="authuser">x-goog-authuser</label>
+  <input type="text" id="authuser" placeholder="1">
+  <div class="hint">Usually 0 or 1 depending on which Google account is logged in.</div>
+
+  <label for="intervalDays">Refresh interval (days)</label>
+  <input type="number" id="intervalDays" min="1" max="30" placeholder="7">
+
+  <div class="actions">
+    <button id="saveBtn">Save</button>
+    <button id="testBtn">Test connection</button>
+  </div>
+
+  <div id="status"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>
