@@ -1,6 +1,6 @@
 # skribidi
 
-Automatically scrobbles your YouTube Music listening history to Last.fm — every 15 minutes, with zero manual interaction.
+Automatically scrobbles your YouTube Music listening history to Last.fm — every 2 hours, with zero manual interaction.
 
 ---
 
@@ -14,8 +14,8 @@ It runs entirely on GitHub Actions — no server, no cost, no third-party servic
 
 ## How it works
 
-1. A GitHub Actions cron job fires every 15 minutes
-2. It fetches your top 50 recently played tracks from YT Music (via OAuth)
+1. A GitHub Actions cron job fires every 2 hours
+2. It fetches your top 50 recently played tracks from YT Music (via browser cookie auth)
 3. It compares them against the last saved snapshot to find new plays
 4. New tracks are scrobbled to Last.fm with approximate timestamps (spaced 3 minutes apart)
 5. The updated snapshot is committed back to the repo for the next run
@@ -38,8 +38,8 @@ It runs entirely on GitHub Actions — no server, no cost, no third-party servic
 ### 1. Fork or clone this repo
 
 ```bash
-git clone https://github.com/payaniga/skribidi-scrobbler.git
-cd skribidi-scrobbler
+git clone https://github.com/payaniga/skribidi-public.git
+cd skribidi-public
 ```
 
 ### 2. Set up your Python environment
@@ -125,7 +125,7 @@ The cron schedule is defined in `.github/workflows/scrobble.yml`:
 ```yaml
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '0 */2 * * *'
 ```
 
 To change the frequency, edit the cron expression. The format is:
@@ -144,7 +144,8 @@ To change the frequency, edit the cron expression. The format is:
 
 | Frequency | Cron expression |
 |---|---|
-| Every 15 minutes (default) | `*/15 * * * *` |
+| Every 15 minutes | `*/15 * * * *` |
+| Every 2 hours (default) | `0 */2 * * *` |
 | Every hour | `0 * * * *` |
 | Every 4 hours | `0 */4 * * *` |
 | Every 6 hours | `0 */6 * * *` |
